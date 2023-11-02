@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/tztestdb
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+logging:
+  level:
+    root: INFO
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type: TRACE

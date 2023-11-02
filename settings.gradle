@@ -2,3 +2,4 @@ rootProject.name = 'timezonedemo'
 
 include 'spring-data-jdbc'
 include 'spring-data-r2dbc'
+include 'spring-data-jpa'

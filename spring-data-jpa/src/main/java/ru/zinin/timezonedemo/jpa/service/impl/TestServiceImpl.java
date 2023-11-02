@@ -1,10 +1,11 @@
-package ru.zinin.timezonedemo.jdbc.service;
+package ru.zinin.timezonedemo.jpa.service.impl;
 
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.zinin.timezonedemo.jdbc.model.TestEntity;
-import ru.zinin.timezonedemo.jdbc.repository.TestEntityRepository;
+import ru.zinin.timezonedemo.jpa.model.TestEntity;
+import ru.zinin.timezonedemo.jpa.service.TestService;
 
 import java.time.Clock;
 import java.time.Instant;
@@ -21,12 +22,12 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class TestServiceImpl implements TestService {
-    private final TestEntityRepository repository;
+    private final EntityManager entityManager;
     private final Clock clock;
 
     @Transactional
     @Override
-    public TestEntity addRow() {
+    public void addRow() {
         Instant nowInstant = Instant.now(clock);
         LocalDateTime nowLocalDateTime = LocalDateTime.ofInstant(nowInstant, ZoneId.systemDefault());
         OffsetDateTime nowOffsetDateTime = OffsetDateTime.ofInstant(nowInstant, ZoneId.systemDefault());
@@ -41,6 +42,6 @@ public class TestServiceImpl implements TestService {
                 .offsetDateTimeWithoutTZ(nowOffsetDateTime)
                 .build();
 
-        return repository.save(testEntity);
+        entityManager.persist(testEntity);
     }
 }
