@@ -1,0 +1,46 @@
+networks:
+  tztest-internal:
+
+volumes:
+  tztest-db:
+
+services:
+  tztest-db:
+    container_name: tztest-db
+    build:
+      context: postgres/
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    healthcheck:
+      test: pg_isready -U postgres -d postgres -p 5432
+      interval: 2s
+      timeout: 3s
+      retries: 3
+    volumes:
+      - tztest-db:/var/lib/postgresql/data
+      - ./postgres/postgresql.conf:/etc/postgresql/postgresql.conf
+    hostname: pghost
+    ports:
+      - "5432:5432"
+    networks:
+      - tztest-internal
+
+  tztest-liqui:
+    container_name: tztest-liqui
+    build:
+      context: ../
+      dockerfile: docker/liquibase/Dockerfile
+    depends_on:
+      tztest-db:
+        condition: service_healthy
+    environment:
+      - DB_HOST=pghost
+      - DB_PORT=5432
+      - DB_NAME=tztestdb
+      - DB_USER=postgres
+      - DB_PASS=postgres
+      - LIQUI_CHANGELOG=master.xml
+    networks:
+      - tztest-internal

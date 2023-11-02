@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.24.xsd">
+    <preConditions>
+        <dbms type="postgresql"/>
+    </preConditions>
+
+    <changeSet author="zinin" id="test-entity-create">
+        <preConditions onFail="MARK_RAN" onFailMessage="Table test_entity already exists">
+            <sqlCheck expectedResult="0">select count(1) from pg_tables where schemaname = 'public' and tablename = 'test_entity'</sqlCheck>
+        </preConditions>
+        <comment>Table public.test_entity</comment>
+        <sql>
+            CREATE TABLE IF NOT EXISTS public.test_entity (
+                id uuid NOT NULL,
+
+                local_date_time_with_tz_col timestamp with time zone NOT NULL,
+                instant_with_tz_col timestamp with time zone NOT NULL,
+                offset_date_time_with_tz_col timestamp with time zone NOT NULL,
+
+                local_date_time_without_tz_col timestamp without time zone NOT NULL,
+                instant_without_tz_col timestamp without time zone NOT NULL,
+                offset_date_time_without_tz_col timestamp without time zone NOT NULL,
+
+                CONSTRAINT pk_monitoring_requests PRIMARY KEY (id)
+            );
+        </sql>
+    </changeSet>
+</databaseChangeLog>
