@@ -1,8 +1,8 @@
-package ru.zinin.timezonedemo.repository;
+package ru.zinin.timezonedemo.jdbc.repository;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import ru.zinin.timezonedemo.model.TestEntity;
+import ru.zinin.timezonedemo.jdbc.model.TestEntity;
 
 import java.util.UUID;
 

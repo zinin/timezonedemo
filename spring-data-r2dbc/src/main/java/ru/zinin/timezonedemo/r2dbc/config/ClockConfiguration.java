@@ -1,4 +1,4 @@
-package ru.zinin.timezonedemo.config;
+package ru.zinin.timezonedemo.r2dbc.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

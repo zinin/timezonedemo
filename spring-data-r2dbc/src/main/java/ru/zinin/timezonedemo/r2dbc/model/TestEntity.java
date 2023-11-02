@@ -1,4 +1,4 @@
-package ru.zinin.timezonedemo.model;
+package ru.zinin.timezonedemo.r2dbc.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
